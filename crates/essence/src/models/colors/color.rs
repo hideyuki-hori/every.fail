@@ -1,9 +1,7 @@
-
 use super::value::Value;
 
 #[derive(Debug, PartialEq)]
-#[allow(dead_code)]
-struct Color {
+pub struct Color {
     r: Value,
     g: Value,
     b: Value,
@@ -11,23 +9,22 @@ struct Color {
 }
 
 impl Color {
-    #[allow(dead_code)]
-    pub fn rgb(r: Value, g: Value, b: Value) -> Self {
+    pub fn rgb(r: u8, g: u8, b: u8) -> Self {
         Color {
-            r,
-            g,
-            b,
+            r: Value::from(r),
+            g: Value::from(g),
+            b: Value::from(b),
             a: Value::zero(),
         }
     }
 
     #[allow(dead_code)]
-    pub fn rgba(r: Value, g: Value, b: Value, a: Value) -> Self {
+    pub fn rgba(r: u8, g: u8, b: u8, a: u8) -> Self {
         Color {
-            r,
-            g,
-            b,
-            a,
+            r: Value::from(r),
+            g: Value::from(g),
+            b: Value::from(b),
+            a: Value::from(a),
         }
     }
 }
@@ -35,10 +32,14 @@ impl Color {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn rgb() {
-        let r = Color::rgb(Value::full(), Value::zero(), Value::zero());
+        let r = Color::rgb(
+            Value::full().into(),
+            Value::zero().into(),
+            Value::zero().into(),
+        );
         assert_eq!(r.r, Value::full());
         assert_eq!(r.g, Value::zero());
         assert_eq!(r.b, Value::zero());
@@ -46,7 +47,12 @@ mod tests {
 
     #[test]
     fn rgba() {
-        let r = Color::rgba(Value::full(), Value::zero(), Value::zero(), Value::full());
+        let r = Color::rgba(
+            Value::full().into(),
+            Value::zero().into(),
+            Value::zero().into(),
+            Value::full().into(),
+        );
         assert_eq!(r.r, Value::full());
         assert_eq!(r.g, Value::zero());
         assert_eq!(r.b, Value::zero());
