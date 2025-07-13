@@ -3,21 +3,25 @@
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Value(u8);
 
-impl Value {
-    pub const fn from(val: u8) -> Self {
-        Value(val)
+impl From<Value> for u8 {
+    fn from(value: Value) -> Self {
+        value.0
     }
+}
 
+impl From<u8> for Value {
+    fn from(value: u8) -> Self {
+        Value(value)
+    }
+}
+
+impl Value {
     pub const fn zero() -> Self {
-        Value::from(0)
+        Value(0)
     }
 
     pub const fn full() -> Self {
-        Value::from(255)
-    }
-
-    pub fn into_u8(self) -> u8 {
-        self.0
+        Value(255)
     }
 }
 
@@ -73,9 +77,9 @@ mod tests {
     }
 
     #[test]
-    fn into_u8() {
+    fn into() {
         let value = Value::from(128);
-        let u8_value = value.into_u8();
-        assert_eq!(u8_value, 128);
+        let raw: u8 = value.into();
+        assert_eq!(raw, 128);
     }
 }
